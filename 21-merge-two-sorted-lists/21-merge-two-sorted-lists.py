@@ -5,27 +5,13 @@
 #         self.next = next
 class Solution(object):
     def mergeTwoLists(self, list1, list2):
+        # found a recursive solution, so implemting it for practice
+        if not list1 or not list2:
+            return list1 or list2
         
-        # avoid edge case of the inital empty list
-        dummy = ListNode()
-        tail = dummy
-        
-        # while the lists are not empty
-        while list1 and list2:
-            if list1.val < list2.val:
-                tail.next = list1
-                list1 = list1.next
-            else:
-                tail.next = list2
-                list2 = list2.next
-            tail = tail.next
-        
-        # what if one list is empty and the other is not empty
-        if list1:
-            tail.next = list1
-        elif list2:
-            tail.next = list2
-        
-        return dummy.next
-        
-                
+        if list1.val < list2.val:
+            list1.next = self.mergeTwoLists(list1.next, list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoLists(list1, list2.next)
+            return list2
